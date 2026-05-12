@@ -1,47 +1,34 @@
 async function sendMessage() {
 
-    const input =
-        document.getElementById("message");
-
+    const input = document.getElementById("message");
     const message = input.value;
 
-    const chatBox =
-        document.getElementById("chat-box");
+    const chatBox = document.getElementById("chat-box");
 
     if (!message) return;
 
-    chatBox.innerHTML +=
-        `<div class="user">
-        You: ${message}
-    </div>`;
+    chatBox.innerHTML += `<div class="user">You: ${message}</div>`;
 
     input.value = "";
 
-    const response =
-        await fetch(
-            fetch("https://chat-bot-oqb8.onrender.com/"),
-            {
+    try {
 
-                method: "POST",
+        const response = await fetch("https://chat-bot-oqb8.onrender.com/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message })
+        });
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const data = await response.json();
 
-                body: JSON.stringify({
-                    message
-                })
+        chatBox.innerHTML += `<div class="bot">AI: ${data.reply}</div>`;
 
-            }
-        );
+    } catch (error) {
 
-    const data =
-        await response.json();
+        chatBox.innerHTML += `<div class="bot">Error: Server not responding</div>`;
 
-    chatBox.innerHTML +=
-        `<div class="bot">
-        AI: ${data.reply}
-    </div>`;
-
+        console.log(error);
+    }
 }
