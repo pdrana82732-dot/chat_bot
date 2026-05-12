@@ -23,7 +23,7 @@ app.post("/chat", async (req, res) => {
         const userMessage = req.body.message;
 
         const completion = await openai.chat.completions.create({
-            model: "meta-llama/llama-3-8b-instruct:free",
+            model: "openai/gpt-4o-mini",
             messages: [
                 {
                     role: "user",
