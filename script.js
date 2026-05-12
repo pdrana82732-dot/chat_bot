@@ -19,7 +19,7 @@ async function sendMessage() {
 
     const response =
         await fetch(
-            "http://localhost:3000/chat",
+            fetch("https://chat-bot-oqb8.onrender.com/chat"),
             {
 
                 method: "POST",
